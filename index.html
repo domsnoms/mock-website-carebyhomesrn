@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Home by RNs — Comprehensive Senior Care</title>
+
+    <style>
+        /* ========== VARIABLES & RESET ========== */
+        :root {
+            --color-navy: #0D293B;
+            --color-warm-accent: #D4845C;
+            --color-teal: #29c4a9;
+            --color-cream: #F3EAE2;
+            --color-light-gray: #E8E5E2;
+            --color-dark-gray: #4A4744;
+            --color-green: #2E8B57;
+            --color-white: #FFFFFF;
+            --color-text: #333333;
+            --transition-speed: 0.3s;
+            --z-demo-banner: 1000;
+            --z-nav: 999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--color-text);
+            line-height: 1.6;
+            background-color: var(--color-white);
+            padding-top: 44px;
+        }
+
+        /* ========== DEMO BANNER ========== */
+        #demo-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: linear-gradient(90deg, var(--color-navy) 0%, #2a5f8d 50%, var(--color-warm-accent) 100%);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: var(--z-demo-banner);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========== NAVIGATION BAR ========== */
+        #navbar {
+            position: sticky;
+            top: 44px;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: var(--z-nav);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-brand {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-navy);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-navy);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color var(--transition-speed) ease;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+
+        .nav-link:hover {
+            color: var(--color-warm-accent);
+        }
+
+        .nav-link.contact-btn {
+            background-color: var(--color-warm-accent);
+            color: var(--color-white);
+            padding: 10px 24px;
+            border-radius: 4px;
+            transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+
+        .nav-link.contact-btn:hover {
+            background-color: #c4724f;
+            transform: translateY(-2px);
+        }
+
+        /* ========== PAGES CONTAINER ========== */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ========== HERO SECTIONS ========== */
+        .hero {
+            position: relative;
+            min-height: 500px;
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            margin-top: 0;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 41, 59, 0.82);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .tagline {
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: italic;
+            font-size: clamp(24px, 3vw, 28px);
+            color: var(--color-cream);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-subtitle {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-cream);
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-speed) ease;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--color-warm-accent);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background-color: #c4724f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 132, 92, 0.4);
+        }
+
+        .btn-success {
+            background-color: var(--color-green);
+            color: var(--color-white);
+        }
+
+        .btn-success:hover {
+            background-color: #267a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 139, 87, 0.4);
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section.cream-bg {
+            background-color: var(--color-cream);
+        }
+
+        .section.white-bg {
+            background-color: var(--color-white);
+        }
+
+        .section h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--color-navy);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section h3 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin-bottom: 15px;
+        }
+
+        /* ========== GRIDS ========== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all var(--transition-speed) ease;
+            border: 1px solid var(--color-light-gray);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 12px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* ========== BADGE ROW ========== */
+        .badge-row {
+            background-color: var(--color-cream);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .badge-text {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-navy);
+            text-align: center;
+            max-width: 100px;
+        }
+
+        .years-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-navy), var(--color-teal));
+            color: var(--color-white);
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700;
+        }
+
+        .years-badge-number {
+            font-size: 28px;
+        }
+
+        .years-badge-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        /* ========== SERVICE CARDS (HOME PAGE) ========== */
+        .service-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid var(--color-light-gray);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--color-warm-accent);
+        }
+
+        .service-card h3 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 12px;
+        }
+
+        .service-card-main {
+            font-size: 16px;
+            color: var(--color-text);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .service-card-sub {
+            font-size: 14px;
+            color: var(--color-dark-gray);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--color-navy);
+            color: var(--color-white);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+
+        /* ========== VALUE PROP CARDS ========== */
+        .value-card {
+            background: linear-gradient(135deg, rgba(13, 41, 59, 0.1), rgba(212, 132, 92, 0.1));
+            border: 2px solid var(--color-light-gray);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .value-card:hover {
+            border-color: var(--color-warm-accent);
+            background: linear-gradient(135deg, rgba(13, 41, 59, 0.15), rgba(212, 132, 92, 0.15));
+        }
+
+        .value-card h4 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonial {
+            background-color: var(--color-white);
+            border-left: 4px solid var(--color-warm-accent);
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--color-text);
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        /* ========== CONTACT FORM ========== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-light-gray);
+            border-radius: 4px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* ========== LOCATION CARDS ========== */
+        .location-card {
+            background-color: var(--color-cream);
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 4px solid var(--color-warm-accent);
+        }
+
+        .location-card h4 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 10px;
+        }
+
+        .location-card p {
+            font-size: 14px;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        /* ========== SEALS & LOGOS ========== */
+        .seal-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .seal-container img {
+            height: 150px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-centered {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-centered img {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* ========== INTRO TEXT ========== */
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ========== ACCESSIBILITY & RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            #navbar {
+                padding: 0 20px;
+                flex-direction: column;
+                height: auto;
+                min-height: 70px;
+            }
+
+            .nav-right {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+                padding-bottom: 15px;
+                border-top: 1px solid #e0e0e0;
+                width: 100%;
+            }
+
+            .nav-link {
+                font-size: 12px;
+            }
+
+            .hero {
+                min-height: 350px;
+                margin-top: 0;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero .tagline {
+                font-size: 18px;
+            }
+
+            .section {
+                padding: 40px 20px;
+            }
+
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .badge-row {
+                gap: 20px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- DEMO BANNER -->
+    <div id="demo-banner">
+        DEMO — Website Consolidation Concept | Prepared by Dom Garcia, Kaizen Infinite Solutions
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav id="navbar">
+        <div class="nav-left">
+            <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2022/10/10094103/care-home-logo-300x300-1.png" alt="Care Home by RNs" class="nav-logo">
+            <span class="nav-brand">CARE HOME BY RNs</span>
+        </div>
+        <div class="nav-right">
+            <button class="nav-link" onclick="navigateTo('home')">Home</button>
+            <button class="nav-link" onclick="navigateTo('assisted-living')">Assisted Living</button>
+            <button class="nav-link" onclick="navigateTo('sub-acute')">Sub-Acute Care</button>
+            <button class="nav-link" onclick="navigateTo('house-calls')">House Calls</button>
+            <button class="nav-link" onclick="navigateTo('about')">About Us</button>
+            <button class="nav-link" onclick="navigateTo('careers')">Careers</button>
+            <button class="nav-link contact-btn" onclick="navigateTo('contact')">Contact Us</button>
+        </div>
+    </nav>
+
+    <!-- PAGE: HOME -->
+    <div id="home" class="page active">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2025/03/06170124/carehome-rns-1500x900-2.jpg'); align-items: flex-end; background-position: center 15%;">
+            <div class="hero-content" style="padding-bottom: 50px;">
+                <h1>Comprehensive Senior Care — From Home to Hospital and Back</h1>
+                <div class="tagline">Founded by Nurses. Powered by Compassion.</div>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" onclick="navigateTo('contact')">Schedule a Tour</button>
+                    <button class="btn btn-success">Make a Referral</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRUST BADGES -->
+        <div class="badge-row">
+            <div class="badge">
+                <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2023/03/06122933/veteran-owned-logo1-200x230-1.png" alt="Veteran-Owned">
+                <span class="badge-text">Veteran-Owned</span>
+            </div>
+            <div class="badge">
+                <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2024/05/17132030/CLHF_seal-180x200-1.png" alt="CLHF Accredited">
+                <span class="badge-text">CLHF Accredited</span>
+            </div>
+            <div class="badge">
+                <img src="https://rcfeassociation.org/wp-content/uploads/2025/03/rcfe-logo.png" alt="RCFE Certified">
+                <span class="badge-text">RCFE Certified</span>
+            </div>
+            <div class="badge">
+                <div class="years-badge">
+                    <div>
+                        <div class="years-badge-number">20</div>
+                        <div class="years-badge-label">YEARS</div>
+                    </div>
+                </div>
+                <span class="badge-text">20 Years of Excellence</span>
+            </div>
+        </div>
+
+        <!-- SERVICE CARDS -->
+        <div class="section white-bg">
+            <h2>Our Services</h2>
+            <div class="grid-3">
+                <div class="service-card" onclick="navigateTo('assisted-living')">
+                    <h3>Assisted Living</h3>
+                    <div class="service-card-main">Personalized care in a home-like setting</div>
+                    <div class="service-card-sub">3 Locations in Sacramento & Lincoln</div>
+                </div>
+                <div class="service-card" onclick="navigateTo('sub-acute')">
+                    <h3>Sub-Acute Care</h3>
+                    <div class="service-card-main">Post-hospital recovery with 24/7 nursing</div>
+                    <div class="service-card-sub">CareByHomeRNs CLHF — 2024 Accredited</div>
+                </div>
+                <div class="service-card" onclick="navigateTo('house-calls')">
+                    <h3>House Calls</h3>
+                    <div class="service-card-main">Modern medicine with old-fashioned values</div>
+                    <div class="service-card-sub">Sacramento & surrounding areas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALUE PROPOSITIONS -->
+        <div class="section cream-bg">
+            <h2>Why Choose Care Home by RNs?</h2>
+            <div class="grid-4">
+                <div class="value-card">
+                    <h4>Nurse-Owned Accountability</h4>
+                    <p>Led by clinical experts who truly understand care.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Continuum of Care</h4>
+                    <p>Assisted living, sub-acute, and house calls all under one mission.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Veteran Values</h4>
+                    <p>Discipline, reliability, and unwavering commitment to excellence.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Proven Clinical Outcomes</h4>
+                    <p>Accredited programs with measurable health improvements.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="section white-bg">
+            <h2>What Families Say</h2>
+            <div class="grid-2">
+                <div class="testimonial">
+                    <div class="testimonial-text">"Care Home by RNs treated my mother like family. The nursing expertise combined with genuine warmth made all the difference."</div>
+                    <div class="testimonial-author">— Margaret T., Sacramento</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"The transition from hospital to post-acute care was seamless. The clinical team knew exactly what my father needed."</div>
+                    <div class="testimonial-author">— James K., Lincoln</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"They didn't just provide care — they became advocates for my health. House calls on my schedule, by nurses who listened."</div>
+                    <div class="testimonial-author">— Patricia R., Sacramento</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA BANNER -->
+        <div class="section cream-bg" style="text-align: center;">
+            <h2>Ready to Discuss Care Options?</h2>
+            <p style="font-size: 18px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Contact our care coordinators today to learn how we can support you or your loved one.
+            </p>
+            <button class="btn btn-primary" onclick="navigateTo('contact')">Get in Touch</button>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: ASSISTED LIVING -->
+    <div id="assisted-living" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2021/05/15094118/yolo-2000x1000-45.jpg');">
+            <div class="hero-content">
+                <h1>Assisted Living</h1>
+                <div class="hero-subtitle">Residential Care Facility for the Elderly</div>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" onclick="navigateTo('contact')">Schedule a Tour</button>
+                    <button class="btn btn-success">Make a Referral</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="section white-bg">
+            <h2>Safe, Dignified Care in Intimate 6-Bed Homes</h2>
+            <div class="intro-text">
+                Our assisted living programs provide personalized support for seniors who need help with activities of daily living but wish to maintain independence and dignity. Small community size ensures attention to individual needs and preferences.
+            </div>
+        </div>
+
+        <!-- SERVICES GRID -->
+        <div class="section cream-bg">
+            <h3 style="text-align: center; margin-bottom: 40px;">Services Offered</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Assisted Living</div>
+                        <div class="card-text">Help with bathing, dressing, grooming, and medications in a supportive home environment.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Memory Care</div>
+                        <div class="card-text">Specialized programs for seniors with dementia or Alzheimer's disease with trained staff.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Hospice Care</div>
+                        <div class="card-text">Compassionate end-of-life care focused on comfort, dignity, and family support.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Respite Care</div>
+                        <div class="card-text">Short-term care options for family caregivers who need temporary relief.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Post-Surgery Rehab</div>
+                        <div class="card-text">Recovery support following surgical procedures with professional nursing oversight.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Transitional Care</div>
+                        <div class="card-text">Bridge care between hospital discharge and return to independent living.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILLED NURSING -->
+        <div class="section white-bg">
+            <h2>Skilled Nursing Care</h2>
+            <div class="intro-text">
+                Our licensed nurses manage complex medical needs with precision and compassion.
+            </div>
+            <div class="grid-3">
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Diabetes & Dementia Care</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Specialized monitoring and management protocols.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Wound Care</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Professional dressing changes and healing assessment.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Ostomy Management</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Compassionate support and training for all ages.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Catheter & Oxygen</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">24/7 monitoring and maintenance of medical equipment.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Injections</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Insulin, vitamin B12, and other prescribed medications.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Medication Management</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Organized administration and comprehensive tracking.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOCATIONS -->
+        <div class="section cream-bg">
+            <h2>Our Locations</h2>
+            <div class="grid-3">
+                <div class="location-card">
+                    <h4>Sacramento — Main Campus</h4>
+                    <p><strong>4970 Walnut Ave</strong></p>
+                    <p>Sacramento, CA 95841</p>
+                    <p>Phone: (916) 408-7199</p>
+                </div>
+                <div class="location-card">
+                    <h4>Lincoln — Aspen Meadows</h4>
+                    <p><strong>531 Aspen Meadows Way</strong></p>
+                    <p>Lincoln, CA 95648</p>
+                    <p>License: #315920036</p>
+                </div>
+                <div class="location-card">
+                    <h4>Lincoln — Alder Creek</h4>
+                    <p><strong>1408 Alder Creek Court</strong></p>
+                    <p>Lincoln, CA 95648</p>
+                    <p>License: #315002194</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="section white-bg">
+            <h2>What Makes Our Homes Special</h2>
+            <div class="grid-2">
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">On-Call Registered Nurses</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">24/7 availability for medical emergencies and health monitoring.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">In-House Nurse Practitioners</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Direct access to clinical expertise without leaving home.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Private Rooms</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Personal space to maintain privacy and independence.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Home-Like Environment</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Small, intimate settings that feel like family homes, not institutions.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Nutritious Meals</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Home-cooked cuisine with attention to dietary needs.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Social Activities & Outings</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Community engagement to maintain social connections.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Housekeeping Services</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Professional cleaning to maintain a fresh, comfortable home.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 5px;">Beautiful Gardens</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Therapeutic outdoor spaces for peaceful relaxation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYMENT -->
+        <div class="section cream-bg">
+            <h2>Payment Options</h2>
+            <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 18px; color: var(--color-navy); font-weight: 600;">Private Pay</p>
+                <p style="font-size: 16px; color: var(--color-text); margin-top: 15px;">
+                    We accept various payment arrangements. Contact our admissions team to discuss options and pricing.
+                </p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section white-bg" style="text-align: center;">
+            <h2>Ready to Visit?</h2>
+            <button class="btn btn-primary" onclick="navigateTo('contact')">Schedule a Tour</button>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: SUB-ACUTE CARE -->
+    <div id="sub-acute" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://images.pexels.com/photos/18459207/pexels-photo-18459207.jpeg?auto=compress&cs=tinysrgb&w=1600'); background-position: center 35%;">
+            <div class="hero-content">
+                <div class="logo-centered">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2021/06/14171738/quiescence-logo-400x100-2.png" alt="CareByHomeRNs">
+                </div>
+                <h1>Sub-Acute Care & Recovery</h1>
+                <div class="hero-subtitle">Post-Hospital Care With 24/7 Skilled Nursing</div>
+                <div class="hero-ctas">
+                    <button class="btn btn-success">Make a Referral</button>
+                    <button class="btn btn-primary" onclick="navigateTo('contact')">Contact Us</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCREDITATION SEAL -->
+        <div class="seal-container">
+            <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2024/05/17132030/CLHF_seal-180x200-1.png" alt="CLHF Accredited">
+            <p style="font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--color-navy); margin-top: 15px;">CLHF Accredited Facility</p>
+        </div>
+
+        <!-- INTRO -->
+        <div class="section white-bg">
+            <h2>Specialized Recovery Programs</h2>
+            <div class="intro-text">
+                CareByHomeRNs CLHF provides intensive post-hospital care in a professional medical setting. Our specialized nursing staff manages complex medical needs while helping patients regain strength and independence.
+            </div>
+        </div>
+
+        <!-- SPECIALTIES -->
+        <div class="section cream-bg">
+            <h3 style="text-align: center; margin-bottom: 40px;">Clinical Specialties</h3>
+            <div class="grid-2">
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Ventilator Support</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Comprehensive care for patients requiring mechanical ventilation and respiratory support.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Tracheostomy Care</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Expert management and maintenance of airway devices with trained nursing staff.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">TBI Recovery</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Specialized protocols for traumatic brain injury rehabilitation and monitoring.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Wound Care</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Advanced wound management techniques to promote healing and prevent complications.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- THERAPY PROGRAMS -->
+        <div class="section white-bg">
+            <h2>Therapy Programs</h2>
+            <div class="grid-4">
+                <div class="card">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2021/06/07111620/yolo-400x400-28.jpg" alt="Respiratory Therapy" class="card-image">
+                    <div class="card-content">
+                        <div class="card-title">Respiratory Therapy</div>
+                        <div class="card-text">Specialized support for breathing and lung function recovery.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2021/05/13205659/yolo-400x400-19.jpg" alt="Physical Therapy" class="card-image">
+                    <div class="card-content">
+                        <div class="card-title">Physical Therapy</div>
+                        <div class="card-text">Strength building and mobility restoration through targeted exercises.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2021/05/13205659/yolo-400x400-20.jpg" alt="Occupational Therapy" class="card-image">
+                    <div class="card-content">
+                        <div class="card-title">Occupational Therapy</div>
+                        <div class="card-text">Support for daily living skills and functional independence.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/35/2021/05/13205700/yolo-380x380-15.png" alt="Speech Therapy" class="card-image">
+                    <div class="card-content">
+                        <div class="card-title">Speech Therapy</div>
+                        <div class="card-text">Communication and swallowing therapy with specialized clinicians.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADDITIONAL SERVICES -->
+        <div class="section cream-bg">
+            <h2>Additional Services</h2>
+            <div class="grid-3">
+                <div style="background-color: var(--color-white); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">IV Therapy</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Intravenous medication and nutrition management by experienced nurses.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Post-Trauma Care</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Comprehensive recovery support following accidents and injuries.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Mental Health Counseling</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Emotional support and professional counseling throughout recovery.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Spiritual Support</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Chaplain services and faith-based resources available.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 20px; border-radius: 8px;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Family Support</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Education and resources to help families support their loved ones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOCATION & INSURANCE -->
+        <div class="section white-bg">
+            <div class="grid-2">
+                <div>
+                    <h3>Location</h3>
+                    <p><strong>4970 Walnut Ave</strong></p>
+                    <p>Sacramento, CA 95841</p>
+                    <p style="margin-top: 15px;">Phone: (916) 408-7199</p>
+                </div>
+                <div>
+                    <h3>Insurance Accepted</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">✓ Managed Care</li>
+                        <li style="padding: 8px 0;">✓ Private Pay</li>
+                        <li style="padding: 8px 0;">✓ Workers Compensation</li>
+                        <li style="padding: 8px 0;">✓ Commercial Insurance</li>
+                        <li style="padding: 8px 0;">✓ Hospice GIP</li>
+                        <li style="padding: 8px 0;">✓ HMO</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section cream-bg" style="text-align: center;">
+            <h2>For Healthcare Professionals</h2>
+            <p style="font-size: 16px; margin-bottom: 30px;">Discharge planners and physicians: referrals accepted 24/7.</p>
+            <button class="btn btn-success">Make a Referral</button>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: HOUSE CALLS -->
+    <div id="house-calls" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://images.pexels.com/photos/8949833/pexels-photo-8949833.jpeg?auto=compress&cs=tinysrgb&w=1600'); background-position: center 20%;">
+            <div class="hero-content">
+                <div class="logo-centered">
+                    <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/176/2024/02/02004435/seniorcareclinic-logo-190x220-1.png" alt="Senior Care Clinic">
+                </div>
+                <h1>House Calls</h1>
+                <div class="hero-subtitle">Modern Medicine With Old-Fashioned Values</div>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" onclick="navigateTo('contact')">Request a Visit</button>
+                    <button class="btn btn-success">Make a Referral</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="section white-bg">
+            <h2>Medical Care in Your Home</h2>
+            <div class="intro-text">
+                Senior Care Clinic brings physician-led care directly to your home. No waiting rooms. No unnecessary hospital visits. Just personalized medical attention when and where you need it most.
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="section cream-bg">
+            <h2>Services Offered</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Medical House Calls</div>
+                        <div class="card-text">Physician visits for diagnosis, treatment, and preventive care in the comfort of home.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Chronic Disease Management</div>
+                        <div class="card-text">Ongoing support for diabetes, hypertension, heart disease, and other chronic conditions.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Palliative Care</div>
+                        <div class="card-text">Symptom management and comfort-focused care for serious illnesses.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Telehealth</div>
+                        <div class="card-text">Video consultations for routine follow-ups and non-emergency concerns.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Primary Care</div>
+                        <div class="card-text">Comprehensive healthcare coordination and continuity of care.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Geriatric Services</div>
+                        <div class="card-text">Specialized expertise in age-related health challenges and senior wellness.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HIGHLIGHTS -->
+        <div class="section white-bg">
+            <h2>Why House Calls?</h2>
+            <div class="grid-2">
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold; margin-top: 5px;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Convenient Scheduling</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Mon-Fri, 9am-5pm, appointments scheduled at your preferred time.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold; margin-top: 5px;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Reduced Fall Risk</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Stay home instead of traveling to medical offices.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold; margin-top: 5px;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Spanish & Mandarin Speaking Staff</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Healthcare in your preferred language.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px;">
+                    <span style="color: var(--color-warm-accent); font-size: 24px; font-weight: bold; margin-top: 5px;">✓</span>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Sacramento Area Coverage</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Serving Sacramento and surrounding communities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICE AREA -->
+        <div class="section cream-bg">
+            <h2>Service Area & Hours</h2>
+            <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 16px; color: var(--color-text); margin-bottom: 15px;">
+                    <strong>Geographic Coverage:</strong> Sacramento and surrounding areas
+                </p>
+                <p style="font-size: 16px; color: var(--color-text); margin-bottom: 15px;">
+                    <strong>Hours of Operation:</strong> Monday - Friday, 9:00 AM - 5:00 PM
+                </p>
+                <p style="font-size: 16px; color: var(--color-text);">
+                    <strong>Languages Spoken:</strong> English, Spanish, Mandarin Chinese
+                </p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section white-bg" style="text-align: center;">
+            <h2>Ready to Experience House Calls?</h2>
+            <button class="btn btn-primary" onclick="navigateTo('contact')">Request a Visit</button>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: ABOUT -->
+    <div id="about" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2025/03/06170124/carehome-rns-1500x900-2.jpg');">
+            <div class="hero-content">
+                <h1>About Care Home by RNs</h1>
+                <div class="tagline" style="text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);">Mission-Driven. Nurse-Owned. Veteran-Founded.</div>
+            </div>
+        </div>
+
+        <!-- VETERAN BADGE -->
+        <div style="text-align: center; padding: 40px; background-color: var(--color-cream);">
+            <img src="https://pebblecdn.sfo3.digitaloceanspaces.com/sites/81/2023/03/06122933/veteran-owned-logo1-200x230-1.png" alt="Veteran-Owned" style="height: 100px; width: auto; object-fit: contain;">
+            <p style="margin-top: 15px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--color-navy);">Founded with Veteran Values</p>
+        </div>
+
+        <!-- STORY -->
+        <div class="section white-bg">
+            <h2>Our Story</h2>
+            <p>Care Home by RNs was founded in 2006 by nurses and healthcare professionals who saw a gap in senior care. They believed that quality elder care required more than good intentions — it required clinical expertise, personal accountability, and genuine compassion.</p>
+            <p style="margin-top: 20px;">
+                What started as a single assisted living home has grown into a comprehensive continuum of care, serving hundreds of seniors and their families across Sacramento and Lincoln. Yet we've maintained our core mission: providing care that honors dignity, respects autonomy, and is grounded in clinical excellence.
+            </p>
+            <p style="margin-top: 20px;">
+                Today, over 70% of Care Home by RNs is owned by shareholding nurses and caregivers — the first assisted living organization to offer ownership shares to qualified caregivers. This unique model aligns our financial success with your loved one's well-being.
+            </p>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="section cream-bg">
+            <h2>Our Journey</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="display: flex; gap: 20px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--color-light-gray);">
+                    <div style="flex-shrink: 0; width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; color: var(--color-warm-accent);">2006</div>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Founded</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">First assisted living home opens with nurse-led care model.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--color-light-gray);">
+                    <div style="flex-shrink: 0; width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; color: var(--color-warm-accent);">2010</div>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Expansion</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Second location opens in Lincoln; ownership model introduced to caregivers.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--color-light-gray);">
+                    <div style="flex-shrink: 0; width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; color: var(--color-warm-accent);">2018</div>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Clinical Growth</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Sub-acute care program (CareByHomeRNs CLHF) established with specialized nursing.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex-shrink: 0; width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; color: var(--color-warm-accent);">2020</div>
+                    <div>
+                        <h4 style="color: var(--color-navy); margin-bottom: 8px;">Modern Medicine</h4>
+                        <p style="font-size: 14px; color: var(--color-text);">Senior Care Clinic (house calls program) launches to extend care into the community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALUES -->
+        <div class="section white-bg">
+            <h2>Core Values</h2>
+            <div class="grid-4">
+                <div style="background: linear-gradient(135deg, rgba(13, 41, 59, 0.1), rgba(212, 132, 92, 0.1)); border-radius: 8px; padding: 25px; text-align: center;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px; font-size: 18px;">Clinical Excellence</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Evidence-based care delivered by licensed professionals.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(13, 41, 59, 0.1), rgba(212, 132, 92, 0.1)); border-radius: 8px; padding: 25px; text-align: center;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px; font-size: 18px;">Dignity First</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Every person deserves respect and autonomy in their care journey.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(13, 41, 59, 0.1), rgba(212, 132, 92, 0.1)); border-radius: 8px; padding: 25px; text-align: center;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px; font-size: 18px;">Accountability</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Nurse ownership means we're personally invested in outcomes.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(13, 41, 59, 0.1), rgba(212, 132, 92, 0.1)); border-radius: 8px; padding: 25px; text-align: center;">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px; font-size: 18px;">Community</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Small, intimate teams that care like family.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- OWNERSHIP MODEL -->
+        <div class="section cream-bg">
+            <h2>Nurse-Led Ownership</h2>
+            <p style="text-align: center; font-size: 16px; max-width: 800px; margin: 0 auto 30px;">
+                Over 70% of Care Home by RNs is owned by shareholding nurses and caregivers. This unique structure means your care team has direct financial stake in delivering excellent outcomes.
+            </p>
+            <div class="grid-2">
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Financial Alignment</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Staff success is company success. Your excellent care delivers measurable business results.</p>
+                </div>
+                <div style="background-color: var(--color-white); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Career Opportunity</h4>
+                    <p style="font-size: 14px; color: var(--color-text);">Nurses and caregivers can build wealth while building legacy care.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: CAREERS -->
+    <div id="careers" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-image: url('https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+            <div class="hero-content">
+                <h1>Join Our Team</h1>
+                <div class="hero-subtitle">Build a Career. Share in Success.</div>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="section white-bg">
+            <h2>Work With Purpose</h2>
+            <div class="intro-text">
+                Care Home by RNs is built on the foundation that caregiving is a calling, not just a job. We attract healthcare professionals who want to make a tangible difference in seniors' lives while building rewarding careers.
+            </div>
+        </div>
+
+        <!-- WHY WORK WITH US -->
+        <div class="section cream-bg">
+            <h2>Why Join Care Home by RNs?</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Clinical Leadership</div>
+                        <div class="card-text">Work within a nurse-led organization where clinical expertise drives all decisions.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Ownership Opportunity</div>
+                        <div class="card-text">Eligible staff can become shareholders and build wealth while building care.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Specialized Training</div>
+                        <div class="card-text">Ongoing education in sub-acute care, house calls, and geriatric specialties.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Small Team Culture</div>
+                        <div class="card-text">Intimate home settings mean stronger relationships with colleagues and residents.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Meaningful Impact</div>
+                        <div class="card-text">See the direct results of your care in patients' recovery and quality of life.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">Competitive Benefits</div>
+                        <div class="card-text">Competitive salary, health insurance, continuing education support, and more.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OPEN POSITIONS -->
+        <div class="section white-bg">
+            <h2>Open Positions</h2>
+            <div class="grid-2">
+                <div style="background-color: var(--color-cream); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Registered Nurse (RN)</h4>
+                    <p style="font-size: 14px; color: var(--color-text); margin-bottom: 10px;">Multiple locations | Full-Time & Part-Time</p>
+                    <p style="font-size: 13px; color: var(--color-dark-gray);">Clinical care coordination, medication management, patient monitoring. Current RN license required. Sub-acute and assisted living experience preferred.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Certified Nursing Assistant (CNA)</h4>
+                    <p style="font-size: 14px; color: var(--color-text); margin-bottom: 10px;">Multiple locations | Full-Time & Part-Time</p>
+                    <p style="font-size: 13px; color: var(--color-dark-gray);">Personal care assistance, activities of daily living support, vital signs. CNA certification required. Compassion and attention to detail essential.</p>
+                </div>
+                <div style="background-color: var(--color-cream); padding: 25px; border-radius: 8px; border-left: 4px solid var(--color-warm-accent);">
+                    <h4 style="color: var(--color-navy); margin-bottom: 10px;">Therapist (PT/OT/SLP)</h4>
+                    <p style="font-size: 14px; color: var(--color-text); margin-bottom: 10px;">Sub-Acute Care | Full-Time</p>
+                    <p style="font-size: 13px; color: var(--color-dark-gray);">Rehabilitation and recovery programming. Current license required. Experience with post-hospital and TBI recovery strongly preferred.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section cream-bg" style="text-align: center;">
+            <h2>Interested in Joining Us?</h2>
+            <p style="font-size: 16px; color: var(--color-text); margin-bottom: 30px;">
+                For current openings and career opportunities, contact: <strong>careers@carehomebyrns.com</strong>
+            </p>
+            <button class="btn btn-primary" onclick="navigateTo('contact')">Get More Information</button>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- PAGE: CONTACT -->
+    <div id="contact" class="page">
+        <!-- HERO -->
+        <div class="hero" style="background-color: var(--color-navy); background-image: none;">
+            <div class="hero-content">
+                <h1>Contact Us</h1>
+                <div class="hero-subtitle">We're Here to Help</div>
+            </div>
+        </div>
+
+        <!-- CONTACT FORM & INFO -->
+        <div class="section white-bg">
+            <div class="grid-2">
+                <!-- FORM -->
+                <div>
+                    <h3>Send Us a Message</h3>
+                    <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">I'm Interested In:</label>
+                            <select id="service" name="service">
+                                <option>— Select a Service —</option>
+                                <option value="assisted-living">Assisted Living</option>
+                                <option value="sub-acute">Sub-Acute Care</option>
+                                <option value="house-calls">House Calls</option>
+                                <option value="referral">Make a Referral</option>
+                                <option value="careers">Career Opportunity</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- CONTACT INFO -->
+                <div>
+                    <h3>Contact Information</h3>
+                    <div style="margin-bottom: 40px;">
+                        <h4 style="color: var(--color-navy); margin-bottom: 15px;">Admissions & General Inquiries</h4>
+                        <p style="font-size: 14px; margin-bottom: 8px;"><strong>Phone:</strong> (916) 408-7199</p>
+                        <p style="font-size: 14px; margin-bottom: 8px;"><strong>Email:</strong> admissions@carehomebyrns.com</p>
+                    </div>
+
+                    <div style="margin-bottom: 40px;">
+                        <h4 style="color: var(--color-navy); margin-bottom: 15px;">Healthcare Professional Referrals</h4>
+                        <p style="font-size: 14px; margin-bottom: 8px;">Discharge planners and physicians welcome 24/7.</p>
+                        <p style="font-size: 14px;"><strong>Email:</strong> referrals@carehomebyrns.com</p>
+                    </div>
+
+                    <div style="margin-bottom: 40px;">
+                        <h4 style="color: var(--color-navy); margin-bottom: 15px;">Careers</h4>
+                        <p style="font-size: 14px;"><strong>Email:</strong> careers@carehomebyrns.com</p>
+                    </div>
+
+                    <h3 style="margin-top: 40px; margin-bottom: 20px;">Facility Locations</h3>
+                    <div class="location-card" style="margin-bottom: 15px;">
+                        <h4>Sacramento — Main Campus</h4>
+                        <p>4970 Walnut Ave</p>
+                        <p>Sacramento, CA 95841</p>
+                        <p>(916) 408-7199</p>
+                    </div>
+                    <div class="location-card" style="margin-bottom: 15px;">
+                        <h4>Lincoln — Aspen Meadows</h4>
+                        <p>531 Aspen Meadows Way</p>
+                        <p>Lincoln, CA 95648</p>
+                    </div>
+                    <div class="location-card">
+                        <h4>Lincoln — Alder Creek</h4>
+                        <p>1408 Alder Creek Court</p>
+                        <p>Lincoln, CA 95648</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFESSIONAL REFERRAL SECTION -->
+        <div class="section cream-bg">
+            <h2>For Healthcare Professionals</h2>
+            <p style="text-align: center; font-size: 16px; max-width: 800px; margin: 0 auto 30px;">
+                Physicians, discharge planners, and clinical coordinators can refer patients directly. We accept referrals 24/7 for our sub-acute care program (CareByHomeRNs CLHF) and house calls services (Senior Care Clinic).
+            </p>
+            <div style="text-align: center;">
+                <button class="btn btn-success" onclick="alert('Referral portal: referrals@carehomebyrns.com')">Submit a Referral</button>
+            </div>
+        </div>
+
+        <footer>© 2026 Care Home by RNs. All rights reserved.</footer>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // PAGE NAVIGATION
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // CONTACT FORM HANDLER
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const service = document.getElementById('service').value;
+                    alert(`Thank you, ${name}! Your message has been received. We'll contact you at ${email} shortly regarding ${service}.\n\nIn a real implementation, this would send to a backend.`);
+                    contactForm.reset();
+                });
+            }
+        });
+
+        // Set home page as default on load
+        window.addEventListener('load', function() {
+            navigateTo('home');
+        });
+    </script>
+</body>
+</html>
